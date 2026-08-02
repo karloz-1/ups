@@ -49,34 +49,20 @@ command_exists() {
     command -v "$1" &>/dev/null
 }
 
-# Pedir confirmación antes de continuar
-confirm() {
-    local msg="${1:-¿Continuar?}"
-    read -p "$(echo -e "${YELLOW}$msg [y/N]: ${NC}")" -n 1 -r
-    echo
-    [[ $REPLY =~ ^[Yy]$ ]]
-}
-
-# Ejecutar con sudo si es necesario
-run_with_sudo() {
-    if [[ $EUID -ne 0 ]]; then
-        sudo "$@"
-    else
-        "$@"
-    fi
-}
-
+# Carga un script de forma más sencilla
 source_script() {
     source "$PROJECT_ROOT"/modules/"$1"
 }
 
+# Detecta la shell que se está utilizando en el momento.
+# Si detecta que tienes zsh instalado, el script asumirá que usas zsh como shell de terminal.
 shell_detector() {
     local ORIGINAL_SHELL="$SHELL"
     echo "SHELL original= $ORIGINAL_SHELL"
     if command_exists zsh; then
         if [ ! -f "$HOME"/.zshrc ]; then
             log_warn "EL ARCHIVO ($HOME/.zshrc) NO EXISTE, CREANDO"
-            touch "$HOME"/.zshrc
+            touch "$HOME"/.zshrc # TODO: Acá proximamente debo de poner el .zshrc que tengo. No crear un uno nuevo vacio.
         else
             log_info "EL ARCHIVO ($HOME/.zshrc) EXISTE"
         fi
