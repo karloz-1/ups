@@ -2,7 +2,6 @@
 # modules/03-software/install.sh - Software manual (no repos oficiales)
 
 source "$(dirname "$0")/../../utils/common.sh"
-shell_detector
 
 module_software() {
     log_info "Instalando software manual..."

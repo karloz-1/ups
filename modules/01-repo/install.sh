@@ -2,7 +2,6 @@
 # modules/01-repo/install.sh - Configurar repositorios
 
 source "$(dirname "$0")/../../utils/common.sh"
-shell_detector
 
 module_repo() {
     log_info "Configurando repositorios..."

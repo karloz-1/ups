@@ -2,7 +2,6 @@
 # modules/08-setup/install.sh - Configuración final
 
 source "$(dirname "$0")/../../utils/common.sh"
-shell_detector
 
 module_setup() {
     log_info "Configuración final..."

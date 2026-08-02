@@ -2,7 +2,6 @@
 # modules/02-packages/install.sh - Paquetes del sistema
 
 source "$(dirname "$0")/../../utils/common.sh"
-shell_detector
 
 module_packages() {
     log_info "Instalando paquetes del sistema..."

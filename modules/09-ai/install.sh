@@ -2,7 +2,6 @@
 # modules/09-ai/install.sh - Herramientas de inteligencia artificial
 
 source "$(dirname "$0")/../../utils/common.sh"
-shell_detector
 
 module_ai() {
     log_info "Instalando herramientas de IA..."

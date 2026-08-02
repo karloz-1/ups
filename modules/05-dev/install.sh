@@ -2,7 +2,6 @@
 # modules/05-dev/install.sh - Herramientas de desarrollo
 
 source "$(dirname "$0")/../../utils/common.sh"
-shell_detector
 
 module_dev() {
     log_info "Configurando herramientas de desarrollo..."

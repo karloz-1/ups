@@ -2,7 +2,6 @@
 # modules/06-gaming/install.sh - Gaming
 
 source "$(dirname "$0")/../../utils/common.sh"
-shell_detector
 
 module_gaming() {
     log_info "Configurando gaming..."

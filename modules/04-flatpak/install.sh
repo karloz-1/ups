@@ -2,7 +2,6 @@
 # modules/04-flatpak/install.sh - Aplicaciones Flatpak
 
 source "$(dirname "$0")/../../utils/common.sh"
-shell_detector
 
 module_flatpak() {
     log_info "Instalando aplicaciones Flatpak..."

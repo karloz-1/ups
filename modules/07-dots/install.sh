@@ -2,7 +2,6 @@
 # modules/07-dots/install.sh - Configuraciones (dotfiles)
 
 source "$(dirname "$0")/../../utils/common.sh"
-shell_detector
 
 module_dots() {
     log_info "Aplicando configuraciones..."
