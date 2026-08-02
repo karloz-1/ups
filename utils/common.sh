@@ -57,25 +57,27 @@ source_script() {
 # Detecta la shell que se está utilizando en el momento.
 # Si detecta que tienes zsh instalado, el script asumirá que usas zsh como shell de terminal.
 shell_detector() {
-    local ORIGINAL_SHELL="$SHELL"
-    echo "SHELL original= $ORIGINAL_SHELL"
-    if command_exists zsh; then
-        if [ ! -f "$HOME"/.zshrc ]; then
-            log_warn "EL ARCHIVO ($HOME/.zshrc) NO EXISTE, CREANDO"
-            touch "$HOME"/.zshrc # TODO: Acá proximamente debo de poner el .zshrc que tengo. No crear un uno nuevo vacio.
-        else
-            log_info "EL ARCHIVO ($HOME/.zshrc) EXISTE"
-        fi
-
+    log_info "SHELL Actual = $SHELL"
+    if command_exists zsh && [ -f "$HOME"/.zshrc ]; then
         if ! echo "$SHELL" | grep "zsh" &>/dev/null; then
-            log_info "SHELL ACTUAL = $SHELL"
-            log_warn "CAMBIANDO A ZSH"
+            log_warn "El sistema asumirá que usas zsh, porque ya que tienes instalado zsh y tienes el .zshrc creado"
+            log_warn "Cambiando a zsh"
             export SHELL="$(which zsh)"
-            log_info "SHELL ACTUAL = $SHELL"
-        else
-            log_info "SHELL = $SHELL"
+            log_info "SHELL Temporal = $SHELL"
+            segundos=10
+            for ((i=segundos; i>0; i--)); do
+                log_info "Continuando en $i segundos..."
+            sleep 1
+            done
         fi
     else
-        log_info "SHELL = $SHELL"
+        log_warn "Si deseas que la SHELL sea zsh y los comandos ejecutados a continuación la reconozcan;"
+        log_warn "debes de instalar zsh y crear el archivo .zshrc en $HOME".
+        log_warn "Opcionalmente puedes hacerla tu shell por defecto pero no es necesario si ya seguiste el paso anterior."
+        segundos=10
+        for ((i=segundos; i>0; i--)); do
+            log_info "Continuando en $i segundos..."
+        sleep 1
+        done
     fi
 }
