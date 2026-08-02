@@ -36,6 +36,9 @@ module_packages() {
             log_success "$pkg instalado"
         fi
     done
+
+    # Instalar la fuente JetBrainsMono Nerd Font
+    source_script "02-packages/jetbrains-mono-nerd-font-install.sh"
 }
 
 # Solo ejecutar si se llama directamente
