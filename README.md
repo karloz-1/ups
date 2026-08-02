@@ -1,6 +1,6 @@
-# Instalador de Configuración
+# Ubuntu Personal Setup - Instalador de Configuración
 
-Script automatizado para replicar la configuración de mi máquina Debian/Ubuntu.
+Script automatizado para replicar la configuración de mi máquina Ubuntu.
 
 ## Uso
 
@@ -20,6 +20,7 @@ chmod +x install.sh
 # Combinar opciones
 ./install.sh --no-gaming --no-dots
 
+# Ejecutar solo repo y packages
 ./install.sh --no-software --no-flatpak --no-dev --no-ai --no-gaming --no-dots --no-setup
 ```
 
@@ -34,34 +35,25 @@ chmod +x install.sh
 | `dev` | Herramientas de desarrollo (node, vscode, etc.) |
 | `ai` | Herramientas de IA (opencode, claude, aider, etc.) |
 | `gaming` | Software de gaming (steam, lutris, etc.) |
-| `dots` | Configuraciones (kitty, fish, neovim, etc.) |
+| `dots` | Configuraciones (kitty, zsh, dms, etc.) |
 | `setup` | Configuración final (shell, alias, etc.) |
 
 ## Estructura
 
 ```
 .
-├── install.sh              # Orquestador principal
+├── install.sh              # Script principal
 ├── README.md
 ├── modules/
 │   ├── 01-repo/
-│   │   └── install.sh
 │   ├── 02-packages/
-│   │   └── install.sh
 │   ├── 03-software/
-│   │   └── install.sh
 │   ├── 04-flatpak/
-│   │   └── install.sh
 │   ├── 05-dev/
-│   │   └── install.sh
 │   ├── 09-ai/
-│   │   └── install.sh
 │   ├── 06-gaming/
-│   │   └── install.sh
 │   ├── 07-dots/
-│   │   └── install.sh
 │   └── 08-setup/
-│       └── install.sh
 └── utils/
     └── common.sh           # Funciones auxiliares
 ```
@@ -176,8 +168,7 @@ MODULE_ORDER=(repo packages software flatpak dev ai gaming dots setup docker)
 ## Personalización
 
 1. Edita el archivo del módulo que quieras modificar
-2. Descomenta y edita el código según tus necesidades
-3. Añade tus propios paquetes, flatpaks, configuraciones, etc.
+2. Añade tus propios paquetes, flatpaks, configuraciones, etc.
 
 ### Funciones disponibles (utils/common.sh)
 
