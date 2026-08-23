@@ -24,6 +24,10 @@ module_packages() {
         stow
         obs-studio
         ttf-mscorefonts-installer
+        kdeconnect
+        python3
+        git-filter-repo
+        filezilla
     )
     
     for pkg in "${packages[@]}"; do
