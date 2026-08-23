@@ -22,6 +22,7 @@ if command_exists code; then
         streetsidesoftware.code-spell-checker-spanish
         myriad-dreamin.tinymist
         icrawl.discord-vscode
+        bradlc.vscode-tailwindcss
     )
 
     for ext in "${vscode_extensions[@]}"; do
