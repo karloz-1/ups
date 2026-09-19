@@ -11,6 +11,9 @@ module_dev() {
         
     # Extensiones de VS Code
     source_script "05-dev/vscode-extensions-install.sh"
+
+    # Cliente de APIs: Bruno
+    source_script "05-dev/bruno-install.sh"
     
     log_success "Herramientas de desarrollo configuradas"
 }
