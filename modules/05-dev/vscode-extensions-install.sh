@@ -23,6 +23,7 @@ if command_exists code; then
         myriad-dreamin.tinymist
         icrawl.discord-vscode
         bradlc.vscode-tailwindcss
+        ms-dotnettools.csdevkit
     )
 
     for ext in "${vscode_extensions[@]}"; do
