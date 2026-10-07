@@ -14,6 +14,9 @@ module_dev() {
 
     # Cliente de APIs: Bruno
     source_script "05-dev/bruno-install.sh"
+
+    # .NET + C#
+    source_script "05-dev/dotnet-install.sh"
     
     log_success "Herramientas de desarrollo configuradas"
 }
