@@ -6,7 +6,7 @@ source "$(dirname "$0")/../../utils/common.sh"
 module_repo() {
     log_info "Configurando repositorios..."
     
-    source_script "01-repo/griffo.sh"
+    # source_script "01-repo/griffo.sh"
 
     sudo apt update
 
