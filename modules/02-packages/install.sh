@@ -15,6 +15,7 @@ module_packages() {
     local packages=(
         curl
         git
+        unzip
         fastfetch
         wget
         blueman
