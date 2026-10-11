@@ -5,13 +5,21 @@
 set -euo pipefail
 
 sudo -v || exit 1
-while true; do
-    sudo -n true
-    sleep 60
-    kill -0 "$$" || exit
-done 2>/dev/null &
+PARENT_PID="$$"
+
+# Bucle keep-alive
+(
+    while kill -0 "$PARENT_PID" 2>/dev/null; do
+        sudo -n true || exit 1
+        sleep 60 &
+        wait $!
+    done
+) 2>/dev/null &
+
 SUDO_KEEPALIVE_PID=$!
-trap 'kill $SUDO_KEEPALIVE_PID 2>/dev/null' EXIT
+
+# Limpiar el proceso auxiliar al salir
+trap 'kill "$SUDO_KEEPALIVE_PID" 2>/dev/null; wait "$SUDO_KEEPALIVE_PID" 2>/dev/null' EXIT
 
 clear
 
