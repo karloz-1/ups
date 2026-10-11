@@ -6,6 +6,9 @@ source "$(dirname "$0")/../../utils/common.sh"
 module_dev() {
     log_info "Configurando herramientas de desarrollo..."
     
+    # docker
+    source_script "05-dev/docker-install.sh"
+
     # Node.js (usando nvm)
     source_script "05-dev/nodejs-install.sh"
         
