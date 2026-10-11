@@ -5,6 +5,11 @@ source "$(dirname "$0")/../../utils/common.sh"
 
 module_packages() {
     log_info "Instalando paquetes del sistema..."
+
+    export DEBIAN_FRONTEND=noninteractive
+
+    # Auto-accept microsoft EULA for ttf-mscorefonts-installer package
+    echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true" | debconf-set-selections
     
     # Añadir paquetes aquí
     local packages=(
