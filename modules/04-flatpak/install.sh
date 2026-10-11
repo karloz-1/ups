@@ -17,6 +17,7 @@ module_flatpak() {
         org.vinegarhq.Sober
         com.discordapp.Discord
         org.onlyoffice.desktopeditors
+        it.mijorus.gearlever
     )
     
     for app in "${flatpaks[@]}"; do
