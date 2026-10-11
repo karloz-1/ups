@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if ! command_exists docker; then
-    log_info "Instalando docker..."
+    log_info "Instalando Docker..."
 
     # Add Docker's official GPG key:
     sudo apt update
@@ -24,7 +24,13 @@ EOF
 
     sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
-    log_success "docker instalado correctamente"
+    if ! sudo systemctl is-active --quiet docker; then
+        log_warn "Docker no está activo. Iniciándolo..."
+        sudo systemctl start docker
+        log_success "Docker activo"
+    fi
+
+    log_success "Docker instalado correctamente"
 else
-    log_warn "docker ya está instalado"
+    log_warn "Docker ya está instalado"
 fi
