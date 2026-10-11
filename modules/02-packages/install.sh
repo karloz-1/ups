@@ -35,7 +35,7 @@ module_packages() {
             log_warn "$pkg ya está instalado"
         else
             log_info "Instalando $pkg..."
-            sudo apt install -y -qq "$pkg"
+            sudo apt install -y "$pkg"
             log_success "$pkg instalado"
         fi
     done
