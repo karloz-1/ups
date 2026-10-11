@@ -30,6 +30,8 @@ EOF
         log_success "Docker activo"
     fi
 
+    sudo usermod -aG docker ${USER}
+
     log_success "Docker instalado correctamente"
 else
     log_warn "Docker ya está instalado"
