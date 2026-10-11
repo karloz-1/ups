@@ -11,16 +11,16 @@ if [ ! -f "$fontFile" ]; then
     tmpfile="/tmp/JetBrainsMono.zip"
 
     if ! command_exists curl; then
-        log_info "Instalando dependencia: curl"
-        sudo DEBIAN_FRONTEND=noninteractive apt install -y curl
+        log_info "Instalando dependencias: curl, unzip"
+        sudo apt install -y curl unzip
     fi
 
     log_info "Descargando paquete de JetBrainsMono-NerdFont desde github.com"
-    curl -fsSL -o "$tmpfile" \
+    curl -fL -o "$tmpfile" \
         "https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/JetBrainsMono.zip"
 
     log_info "Instalando JetBrainsMono-NerdFont"
-    unzip -q "$tmpfile" -d "$fontsDir"
+    unzip "$tmpfile" -d "$fontsDir"
 
     log_info "Removiendo descarga temporal"
     rm -f "$tmpfile"
