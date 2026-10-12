@@ -26,7 +26,7 @@ clear
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/utils/common.sh"
 
-shell_detector
+# shell_detector
 
 # ============================================================
 # Definición de módulos (orden de ejecución)

@@ -1,0 +1,60 @@
+{
+  "workbench.iconTheme": "material-icon-theme",
+  "workbench.productIconTheme": "fluent-icons",
+  "vim.useSystemClipboard": true,
+  "vim.hlsearch": true,
+  "vim.statusBarColorControl": true,
+  "vim.statusBarColors.normal": ["#384956", "#D2E5F5"],
+  "vim.statusBarColors.insert": ["#004C6D", "#C8E6FF"],
+  "vim.statusBarColors.visual": ["#4B4263", "#E9DDFF"],
+  "workbench.colorCustomizations": {
+    "statusBar.background": "#384956",
+    "statusBar.noFolderBackground": "#384956",
+    "statusBar.debuggingBackground": "#384956",
+    "statusBar.foreground": "#D2E5F5",
+    "statusBar.debuggingForeground": "#D2E5F5"
+  },
+  "editor.formatOnSave": true,
+  "redhat.telemetry.enabled": true,
+  "terminal.integrated.stickyScroll.enabled": false,
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  },
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  },
+  "[javascript jsx]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  },
+  "vim.normalModeKeyBindingsNonRecursive": [
+    {
+      "before": ["j"],
+      "after": ["g", "j"],
+    },
+    {
+      "before": ["k"],
+      "after": ["g", "k"],
+    },
+  ],
+  "editor.fontFamily": "'JetBrains Mono', 'Droid Sans Mono', monospace",
+  "editor.fontLigatures": true,
+  "liveServer.settings.donotShowInfoMsg": true,
+  "workbench.colorTheme": "Ayu Dark Bordered",
+  "cSpell.language": "en,es",
+  "explorer.confirmDelete": false,
+  "workbench.editor.empty.hint": "hidden",
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  },
+  "editor.minimap.enabled": false,
+  "files.autoSave": "afterDelay",
+  "chat.titleBar.signIn.enabled": false,
+  "workbench.browser.showInTitleBar": false,
+  "workbench.navigationControl.enabled": false,
+  "window.commandCenter": false,
+  "chat.titleBar.openInAgentsWindow.enabled": false,
+  "workbench.secondarySideBar.defaultVisibility": "hidden",
+}

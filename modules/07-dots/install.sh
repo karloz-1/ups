@@ -4,307 +4,101 @@
 source "$(dirname "$0")/../../utils/common.sh"
 
 module_dots() {
-    log_info "Aplicando configuraciones..."
-    
-    local dots_dir="$PROJECT_ROOT/configs"
-    
-    pwd
-    local casa="$HOME/Documents"
-    echo "$casa"
+    log_info "Aplicando configuraciones (dotfiles)..."
 
-    # Añadir configuraciones aquí
-    if [[ -L "$casa" && -e "$casa" ]]; then
-        echo "Esto es un enlace"
-    else
-        echo "Esto no es un enlace"
+    # Instalar dependencias
+    if ! command_exists "stow"; then
+        log_warn "Dependencias faltantes: stow"
+        log_info "Instalando la dependencia: stow"
+
+        sudo apt install -y stow
+
+        log_success "Dependencia stow instalada"
     fi
-
-#     comandos utilies:
-#     Claro. Si yo fuera a empezar desde cero con tu proyecto `ups`, haría esto.
-
-# ---
-
-# # Objetivo
-
-# Tener un repositorio con tus dotfiles donde:
-
-# * ✅ Puedes editar normalmente desde `~/.config`.
-# * ✅ Git detecta los cambios automáticamente.
-# * ✅ Si formateas el PC, solo clonas el repo y ejecutas el instalador.
-# * ✅ No existen dos copias de los mismos archivos.
-
-# La idea más importante es esta:
-
-# > **El repositorio será la única copia real de tus configuraciones.**
-# >
-# > `~/.config` contendrá enlaces simbólicos que apuntan a esa copia.
-
-# ---
-
-# # Tu proyecto
-
-# Actualmente tienes algo parecido a:
-
-# ```text
-# ups/
-# ├── configs/
-# ├── modules/
-# ├── install.sh
-# └── ...
-# ```
-
-# La carpeta `configs/` será donde vivan todos tus dotfiles.
-
-# ---
-
-# # Cómo organizar `configs`
-
-# Por ejemplo:
-
-# ```text
-# configs/
-# ├── niri/
-# │   └── .config/
-# │       └── niri/
-# │           ├── config.kdl
-# │           └── dms/
-# ├── kitty/
-# │   └── .config/
-# │       └── kitty/
-# ├── nvim/
-# │   └── .config/
-# │       └── nvim/
-# ├── git/
-# │   └── .gitconfig
-# └── zsh/
-#     └── .zshrc
-# ```
-
-# Cada carpeta (`niri`, `kitty`, `nvim`, etc.) es un **paquete** de Stow.
-
-# ---
-
-# # Cómo migrar un paquete
-
-# Supongamos que quieres empezar por Niri.
-
-# Actualmente tienes:
-
-# ```text
-# ~/.config/niri
-# ```
-
-# Lo moverías al repositorio:
-
-# ```bash
-# mkdir -p ~/ups/configs/niri/.config
-
-# mv ~/.config/niri ~/ups/configs/niri/.config/
-# ```
-
-# Ahora el repositorio contiene la configuración.
-
-# ---
-
-# # Crear los enlaces
-
-# Después:
-
-# ```bash
-# cd ~/ups/configs
-
-# stow --target="$HOME" niri
-# ```
-
-# Stow crea los enlaces necesarios.
-
-# Desde ese momento vuelve a existir:
-
-# ```text
-# ~/.config/niri
-# ```
-
-# pero ya no es una carpeta independiente.
-
-# Apunta a
-
-# ```text
-# ~/ups/configs/niri/.config/niri
-# ```
-
-# ---
-
-# # ¿Qué pasa al editar?
-
-# Si haces:
-
-# ```bash
-# nvim ~/.config/niri/config.kdl
-# ```
-
-# realmente modificas
-
-# ```text
-# ~/ups/configs/niri/.config/niri/config.kdl
-# ```
-
-# Git verá el cambio inmediatamente.
-
-# No necesitas sincronizar nada.
-
-# ---
-
-# # ¿Y si Niri crea nuevos archivos?
-
-# Por ejemplo:
-
-# ```text
-# ~/.config/niri/dms/animations.kdl
-# ```
-
-# Ese archivo aparecerá directamente dentro del repositorio.
-
-# Solo tendrás que hacer:
-
-# ```bash
-# git add .
-# git commit
-# git push
-# ```
-
-# No necesitas volver a ejecutar Stow.
-
-# ---
-
-# # ¿Y si reorganizo mi configuración?
-
-# Supongamos que mañana decides crear:
-
-# ```text
-# scripts/
-# themes/
-# modules/
-# ```
-
-# dentro de `~/.config/niri`.
-
-# No pasa nada.
-
-# Como estás trabajando sobre el directorio enlazado, esas carpetas nuevas también forman parte del repositorio.
-
-# ---
-
-# # ¿Cuándo ejecuto Stow?
-
-# Normalmente solo:
-
-# * cuando instalas una máquina nueva;
-# * cuando agregas un paquete nuevo (por ejemplo `waybar`);
-# * cuando eliminas un paquete (`stow -D`).
-
-# No hace falta ejecutarlo cada vez que cambias un archivo.
-
-# ---
-
-# # ¿Puedo ejecutar Stow muchas veces?
-
-# Sí.
-
-# Es seguro hacerlo varias veces.
-
-# Solo dará un error si encuentra un conflicto, por ejemplo si ya existe un archivo real donde quiere crear un enlace.
-
-# ---
-
-# # ¿Qué hará tu módulo `07-dots`?
-
-# Algo tan simple como:
-
-# ```bash
-# cd "$ROOT/configs"
-
-# stow --target="$HOME" *
-# ```
-
-# Cada carpeta dentro de `configs/` se enlazará automáticamente.
-
-# Si mañana agregas:
-
-# ```text
-# configs/
-# ├── waybar/
-# ├── foot/
-# ├── starship/
-# ```
-
-# el script no necesita cambiar.
-
-# ---
-
-# # El flujo diario
-
-# Tu día a día sería:
-
-# ```text
-# Editar ~/.config/niri/config.kdl
-#             │
-#             ▼
-# Git detecta el cambio
-#             │
-#             ▼
-# git add .
-# git commit
-# git push
-# ```
-
-# No hay pasos de sincronización.
-
-# No hay que copiar archivos.
-
-# No hay que ejecutar scripts después de editar.
-
-# ---
-
-# # El flujo al formatear el PC
-
-# 1. Clonas tu repositorio.
-
-# ```bash
-# git clone ...
-# ```
-
-# 2. Ejecutas tu instalador.
-
-# ```bash
-# ./install.sh
-# ```
-
-# 3. El módulo `07-dots` ejecuta Stow.
-
-# 4. Todas las configuraciones aparecen otra vez en:
-
-# ```text
-# ~/.config
-# ```
-
-# listas para usar.
-
-# ---
-
-# ## Mi recomendación
-
-# No migres todas las configuraciones de golpe. Empieza solo con `niri`:
-
-# 1. Mueve `~/.config/niri` a `configs/niri/.config/`.
-# 2. Ejecuta `stow --target="$HOME" niri`.
-# 3. Comprueba que `~/.config/niri` funciona con normalidad.
-# 4. Haz un cambio en `config.kdl` y verifica que `git status` lo detecta.
-# 5. Crea un archivo nuevo dentro de `~/.config/niri` y confirma que aparece también en el repositorio.
-
-# Cuando veas ese flujo funcionando, podrás migrar `kitty`, `nvim`, `waybar`, `hypr`, `zsh` y el resto con el mismo patrón. Es más fácil validar el proceso con un solo paquete antes de extenderlo a toda tu configuración.
-
     
-    log_success "Configuraciones aplicadas"
+    # Definir variables locales para las rutas
+    local BACKUP_DIR="$HOME/.backups/dotfiles"
+    local DOTS_DIR="$PROJECT_ROOT/configs"
+    local HOME_CONFIG="$HOME/.config"
+
+    mkdir -p "$BACKUP_DIR"
+    mkdir -p "$BACKUP_DIR/.config"
+    mkdir -p "$HOME_CONFIG"
+
+    # ========================== Proceso de backup y enlace ================================
+
+    cd "$DOTS_DIR" || exit 1
+
+    # args:
+    # $1 = ruta del archivo
+    # $2 = nombre del paquete de stow
+    # $3 = ruta donde va el archivo (carpeta)
+
+    # Ejemplo: link_single_file "$HOME/.config/niri/config.kdl" "niri" "$HOME/.config/niri"
+    link_single_file() {
+        if [ -f "$1" ]; then
+            log_warn "El archivo ubicado en: [$1] existe. Moviéndolo al backup..."
+            
+            # Si es un enlace simbolico; lo elimina sin guardar en un backup, si no lo mueve al backup
+            if [ -L "$1" ]; then
+                log_warn "El archivo: [$1] fue detectado como un enlace simbólico. Eliminando SIN GUARDAR BACKUP..."
+                rm -f "$1" || exit 1
+                log_success "[$1] Eliminado correctamente"
+            else
+                rm -f "$BACKUP_DIR"/$1 || exit 1
+                mv "$1" "$BACKUP_DIR" || exit 1
+                log_success "El archivo: [$1] ha sido correctamente respaldado en: [$BACKUP_DIR/$1]"
+            fi
+            
+            log_info "Enlazando: [$DOTS_DIR/$2]"
+            stow --target="$3" "$2" || exit 1
+            log_success "[$DOTS_DIR/$2] correctamente enlazado en [$1]"
+        else
+            log_info "Enlazando: [$DOTS_DIR/$2]"
+            stow --target="$3" "$2" || exit 1
+            log_success "[$DOTS_DIR/$2] correctamente enlazado en [$1]"
+        fi
+    }
+
+    # Zshrc
+    link_single_file "$HOME/.zshrc" "zsh" "$HOME"
+
+    # Vscode settings file
+    link_single_file "$HOME/.config/Code/User/settings.json" "vscode" "$HOME_CONFIG"
+
+    #========= $HOME/.config files
+    local config_packages=(
+        DankMaterialShell
+        kitty
+        niri
+    )
+
+    for config_pkg in "${config_packages[@]}"; do
+
+        if [[ -d "$HOME_CONFIG/$config_pkg" || -L "$HOME_CONFIG/$config_pkg" ]]; then
+            log_warn "La carpeta ubicada en: [$HOME_CONFIG/$config_pkg] existe. Moviéndola al backup..."
+
+            # Eliminar la carpeta respaldada y crearla nueva mente vacia
+            rm -rf "$BACKUP_DIR/.config/$config_pkg" || exit 1
+            mkdir $BACKUP_DIR/.config/$config_pkg || exit 1
+
+            # Copiar todo el contenido de la carpeta original al backup para posteriormente eliminar la carpeta original y se pueda hacer el enlace correctamente
+            cp -r "$HOME_CONFIG/$config_pkg/" "$BACKUP_DIR/.config/" || exit 1
+            rm -rf "$HOME_CONFIG/$config_pkg"
+            log_success "La carpeta: [$HOME_CONFIG/$config_pkg] ha sido correctamente respaldada en: [$BACKUP_DIR/.config/$config_pkg]"
+
+            # Enlazar el contenido del paquete stow en $HOME/.config/
+            log_info "Enlazando: [$DOTS_DIR/$config_pkg]"
+            stow --target="$HOME_CONFIG" "$config_pkg" || exit 1
+            log_success "[$DOTS_DIR/$config_pkg] correctamente enlazado en [$HOME_CONFIG/$config_pkg]"
+        else
+            log_info "Enlazando: [$DOTS_DIR/$config_pkg]"
+            stow --target="$HOME_CONFIG" "$config_pkg" || exit 1
+            log_success "[$DOTS_DIR/$config_pkg] correctamente enlazado en [$HOME_CONFIG/$config_pkg]"
+        fi
+    done
+
+    log_success "Configuraciones (dotfiles) aplicadas"
 }
 
 # Solo ejecutar si se llama directamente
