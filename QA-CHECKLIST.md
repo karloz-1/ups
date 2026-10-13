@@ -6,10 +6,10 @@
     - [x] install.sh
     - [x] jetbrains-mono-nerd-font-install
 
-- [] 03-software
-    - [] install.sh
-    - [] tyspt-install (no desarrollado)
-    - [] vscode-install
+- [x] 03-software
+    - [x] install.sh
+    - [x] tyspt-install (no desarrollado)
+    - [x] vscode-install
 
 - [] 04-flatpak
     - [] install.sh
