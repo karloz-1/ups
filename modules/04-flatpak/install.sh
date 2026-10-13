@@ -6,11 +6,8 @@ source "$(dirname "$0")/../../utils/common.sh"
 module_flatpak() {
     log_info "Instalando aplicaciones Flatpak..."
     
-    # Verificar si flatpak está instalado
-    if ! command_exists flatpak; then
-        log_info "Instalando Flatpak..."
-        sudo env DEBIAN_FRONTEND=noninteractive apt install -y flatpak gnome-software-plugin-flatpak && flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-    fi
+    install_dependencies "flatpak" "gnome-software-plugin-flatpak"
+    flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
     
     # Añadir flatpaks aquí
     local flatpaks=(
@@ -25,7 +22,7 @@ module_flatpak() {
             log_warn "$app ya está instalado"
         else
             log_info "Instalando $app..."
-            flatpak install -y flathub "$app"
+            flatpak install -y flathub "$app" || die "No se pudo instalar el flatpak $app"
             log_success "$app instalado"
         fi
     done
