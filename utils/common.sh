@@ -68,6 +68,41 @@ die() {
     exit "$exit_code"
 }
 
+# Instalar múltiples dependencias mediante apt
+# Ejemplo: install_dependencies "stow" "curl" "wget"
+install_dependencies() {
+    local missing_pkgs=()
+
+    # Filtrar cuáles dependencias no están instaladas
+    for pkg in "$@"; do
+        if ! command_exists "$pkg"; then
+            missing_pkgs+=("$pkg")
+        fi
+    done
+
+    # Si todas ya están instaladas, no se hace nada
+    if [ ${#missing_pkgs[@]} -eq 0 ]; then
+        log_info "Todas las dependencias solicitadas ya están instaladas."
+        return 0
+    fi
+
+    log_warn "Dependencias faltantes detectadas: ${missing_pkgs[*]}"
+    log_info "Actualizando repositorios de APT..."
+    
+    sudo apt update || die "No se pudieron actualizar los repositorios de APT."
+
+    log_info "Instalando dependencias faltantes..."
+    
+    # Instalar todas las dependencias
+    if sudo apt install -y "${missing_pkgs[@]}"; then
+        for pkg in "${missing_pkgs[@]}"; do
+            log_success "Dependencia '$pkg' instalada correctamente."
+        done
+    else
+        die "Ocurrió un error crítico al intentar instalar las dependencias: ${missing_pkgs[*]}"
+    fi
+}
+
 # Detecta la shell que se está utilizando en el momento.
 # Si detecta que tienes zsh instalado, el script asumirá que usas zsh como shell de terminal.
 shell_detector() {
