@@ -54,6 +54,20 @@ source_script() {
     source "$PROJECT_ROOT"/modules/"$1"
 }
 
+# Función para detener la ejecución y reportar errores detallados
+# Ejemplo: die "Mensaje descriptivo" 127 <- exit code
+die() {
+    local message="$1"
+    local exit_code="${2:-1}" # Código de salida por defecto: 1
+    local line="${BASH_LINENO[0]}"
+    local script="${BASH_SOURCE[1]}"
+
+    echo -e "${RED}[ERROR CRÍTICO]${NC} ${BLUE}Script:${NC} $script | ${BLUE}Línea:${NC} $line" >&2
+    echo -e "${YELLOW}Motivo:${NC} $message" >&2
+    
+    exit "$exit_code"
+}
+
 # Detecta la shell que se está utilizando en el momento.
 # Si detecta que tienes zsh instalado, el script asumirá que usas zsh como shell de terminal.
 shell_detector() {
