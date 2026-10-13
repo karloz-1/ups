@@ -2,9 +2,9 @@
 - [x] 01-repo
     - [x] install-sh
 
-- [] 02-packages
-    - [] install.sh
-    - [] jetbrains-mono-nerd-font-install
+- [x] 02-packages
+    - [x] install.sh
+    - [x] jetbrains-mono-nerd-font-install
 
 - [] 03-software
     - [] install.sh
