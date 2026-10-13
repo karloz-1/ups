@@ -11,8 +11,8 @@
     - [x] tyspt-install (no desarrollado)
     - [x] vscode-install
 
-- [] 04-flatpak
-    - [] install.sh
+- [x] 04-flatpak
+    - [x] install.sh
 
 - [] 05-dev
     - [] bruno-install
