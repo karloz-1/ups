@@ -6,7 +6,7 @@ source "$(dirname "$0")/../../utils/common.sh"
 module_repo() {
     log_info "Configurando repositorios..."
     
-    sudo apt update
+    sudo apt update || die "No se pudieron actualizar los repositorios de APT."
 
     log_success "Repositorios configurados"
 }
