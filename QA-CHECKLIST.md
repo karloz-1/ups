@@ -22,9 +22,9 @@
     - [x] nodejs-install
     - [x] vscode-extensions-install
 
-- [] 06-gaming
-    - [] install.sh
-    - [] steam-install
+- [x] 06-gaming
+    - [x] install.sh
+    - [x] steam-install
 
 - [] 07-dots
     - [] install.sh
