@@ -7,66 +7,64 @@ module_dots() {
     log_info "Aplicando configuraciones (dotfiles)..."
 
     # Instalar dependencias
-    if ! command_exists "stow"; then
-        log_warn "Dependencias faltantes: stow"
-        log_info "Instalando la dependencia: stow"
-
-        sudo apt install -y stow
-
-        log_success "Dependencia stow instalada"
-    fi
+    install_dependencies "stow"
     
     # Definir variables locales para las rutas
     local BACKUP_DIR="$HOME/.backups/dotfiles"
     local DOTS_DIR="$PROJECT_ROOT/configs"
     local HOME_CONFIG="$HOME/.config"
 
-    mkdir -p "$BACKUP_DIR"
-    mkdir -p "$BACKUP_DIR/.config"
-    mkdir -p "$HOME_CONFIG"
+    mkdir -p "$BACKUP_DIR" || die "No se pudo crear la carpeta $BACKUP_DIR"
+    mkdir -p "$BACKUP_DIR/.config" || die "No se pudo crear la carpeta $BACKUP_DIR/.config"
+    mkdir -p "$HOME_CONFIG" || die "No se pudo crear la carpeta $HOME_CONFIG"
 
     # ========================== Proceso de backup y enlace ================================
 
-    cd "$DOTS_DIR" || exit 1
+    cd "$DOTS_DIR" || die "No se pudo hacer cd a la carpeta $DOTS_DIR"
 
-    # args:
-    # $1 = ruta del archivo
-    # $2 = nombre del paquete de stow
-    # $3 = ruta donde va el archivo (carpeta)
-
-    # Ejemplo: link_single_file "$HOME/.config/niri/config.kdl" "niri" "$HOME/.config/niri"
     link_single_file() {
-        if [ -f "$1" ]; then
-            log_warn "El archivo ubicado en: [$1] existe. Moviéndolo al backup..."
+        local stow_pkg="$1" # vscode
+        local path="$2" # config/Code/User || $HOME (si se pasa el argumento vacio)
+        local file_name="$3" # settings.json
+        local file_path="$path/$file_name" # .config/Code/User/settings.json
+
+        # Crear la carpeta de destino si por si no existe
+        mkdir -p "$HOME/$path" || die "No se pudo crear la carpeta $HOME/$path"
+
+        if [ -f "$HOME/$file_path" ]; then
+            log_warn "El archivo ubicado en: [$HOME/$file_path] existe. Moviéndolo al backup..."
             
             # Si es un enlace simbolico; lo elimina sin guardar en un backup, si no lo mueve al backup
-            if [ -L "$1" ]; then
-                log_warn "El archivo: [$1] fue detectado como un enlace simbólico. Eliminando SIN GUARDAR BACKUP..."
-                rm -f "$1" || exit 1
-                log_success "[$1] Eliminado correctamente"
+            if [ -L "$HOME/$file_path" ]; then
+                log_warn "El archivo: [$HOME/$file_path] fue detectado como un enlace simbólico. Eliminando SIN GUARDAR BACKUP..."
+                rm -f "$HOME/$file_path" || die "No se pudo eliminar el archivo $HOME/$file_path"
+                log_success "[$HOME/$file_path] Eliminado correctamente"
             else
-                rm -f "$BACKUP_DIR"/$1 || exit 1
-                mv "$1" "$BACKUP_DIR" || exit 1
-                log_success "El archivo: [$1] ha sido correctamente respaldado en: [$BACKUP_DIR/$1]"
+                mkdir -p "$BACKUP_DIR/$path" || die "No se pudo crear la carpeta de respaldo [$BACKUP_DIR/$path]"
+                rm -f "$BACKUP_DIR/$file_path" || die "No se pudo eliminar el antiguo backup [$BACKUP_DIR/$file_path]"
+                mv "$HOME/$file_path" "$BACKUP_DIR/$path" || die "No se pudo mover el archivo [$HOME/$file_path] al backup ubicado en [$BACKUP_DIR/$path]"
+                log_success "El archivo: [$HOME/$file_path] ha sido correctamente respaldado en: [$BACKUP_DIR/$file_path]"
             fi
-            
-            log_info "Enlazando: [$DOTS_DIR/$2]"
-            stow --target="$3" "$2" || exit 1
-            log_success "[$DOTS_DIR/$2] correctamente enlazado en [$1]"
-        else
-            log_info "Enlazando: [$DOTS_DIR/$2]"
-            stow --target="$3" "$2" || exit 1
-            log_success "[$DOTS_DIR/$2] correctamente enlazado en [$1]"
         fi
+
+        log_info "Enlazando: [$DOTS_DIR/$file_name]"
+        if [[ "$path" == "" ]]; then
+            stow --target="$HOME" "$stow_pkg" || die "No se pudo hacer el enlace de [$DOTS_DIR/$file_name] a [$HOME/$file_name]"
+            log_success "[$DOTS_DIR/$file_name] correctamente enlazado en [$HOME/$file_name]"
+        else
+            stow --target="$HOME/$path" "$stow_pkg" || die "No se pudo hacer el enlace de [$DOTS_DIR/$file_name] a [$HOME/$file_path]"
+            log_success "[$DOTS_DIR/$file_name] correctamente enlazado en [$HOME/$file_path]"
+        fi
+
     }
 
     # Zshrc
-    link_single_file "$HOME/.zshrc" "zsh" "$HOME"
+    link_single_file "zsh" "" ".zshrc"
 
     # Vscode settings file
-    link_single_file "$HOME/.config/Code/User/settings.json" "vscode" "$HOME_CONFIG"
+    link_single_file "vscode" ".config/Code/User" "settings.json"
 
-    #========= $HOME/.config files
+    # ========= $HOME/.config files ============
     local config_packages=(
         DankMaterialShell
         kitty
@@ -79,21 +77,21 @@ module_dots() {
             log_warn "La carpeta ubicada en: [$HOME_CONFIG/$config_pkg] existe. Moviéndola al backup..."
 
             # Eliminar la carpeta respaldada y crearla nueva mente vacia
-            rm -rf "$BACKUP_DIR/.config/$config_pkg" || exit 1
-            mkdir $BACKUP_DIR/.config/$config_pkg || exit 1
+            rm -rf "$BACKUP_DIR/.config/$config_pkg" || die "No se pudo eliminar el antiguo backup [$BACKUP_DIR/.config/$config_pkg]"
+            mkdir $BACKUP_DIR/.config/$config_pkg || die "No se pudo crear la carpeta [$BACKUP_DIR/.config/$config_pkg]"
 
             # Copiar todo el contenido de la carpeta original al backup para posteriormente eliminar la carpeta original y se pueda hacer el enlace correctamente
-            cp -r "$HOME_CONFIG/$config_pkg/" "$BACKUP_DIR/.config/" || exit 1
-            rm -rf "$HOME_CONFIG/$config_pkg"
+            cp -r "$HOME_CONFIG/$config_pkg/" "$BACKUP_DIR/.config/" || die "No se pudo copiar el contenido de [$HOME_CONFIG/$config_pkg/] en [$BACKUP_DIR/.config/]"
+            rm -rf "$HOME_CONFIG/$config_pkg" || die "No se pudo eliminar la carpeta [$HOME_CONFIG/$config_pkg]"
             log_success "La carpeta: [$HOME_CONFIG/$config_pkg] ha sido correctamente respaldada en: [$BACKUP_DIR/.config/$config_pkg]"
 
             # Enlazar el contenido del paquete stow en $HOME/.config/
             log_info "Enlazando: [$DOTS_DIR/$config_pkg]"
-            stow --target="$HOME_CONFIG" "$config_pkg" || exit 1
+            stow --target="$HOME_CONFIG" "$config_pkg" || die "No se pudo hacer el enlace de [$DOTS_DIR/$config_pkg] a [$HOME_CONFIG]"
             log_success "[$DOTS_DIR/$config_pkg] correctamente enlazado en [$HOME_CONFIG/$config_pkg]"
         else
             log_info "Enlazando: [$DOTS_DIR/$config_pkg]"
-            stow --target="$HOME_CONFIG" "$config_pkg" || exit 1
+            stow --target="$HOME_CONFIG" "$config_pkg" || die "No se pudo hacer el enlace de [$DOTS_DIR/$config_pkg] a [$HOME_CONFIG]"
             log_success "[$DOTS_DIR/$config_pkg] correctamente enlazado en [$HOME_CONFIG/$config_pkg]"
         fi
     done
