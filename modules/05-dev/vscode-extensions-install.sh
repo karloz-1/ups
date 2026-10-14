@@ -31,10 +31,10 @@ if command_exists code; then
             log_warn "Extensión $ext ya instalada"
         else
             log_info "Instalando extensión $ext..."
-            code --install-extension "$ext"
+            code --install-extension "$ext" || die "No se pudo instalar la extensión de vscode $ext"
         fi
     done
 else
-    log_error "Vscode no está instalado"
+    log_warn "Vscode no está instalado"
     log_warn "Omitiendo extensiones"
 fi

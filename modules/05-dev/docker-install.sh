@@ -20,16 +20,21 @@ Architectures: $(dpkg --print-architecture)
 Signed-By: /etc/apt/keyrings/docker.asc
 EOF
 
-    sudo apt update
+    sudo apt update || die "No se pudieron actualizar los repositorios de APT."
 
-    sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+    sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin || die "No se pudieron instalar todos los paquetes"
 
-    if ! sudo systemctl is-active --quiet docker; then
-        log_warn "Docker no está activo. Iniciándolo..."
-        sudo systemctl start docker
-        log_success "Docker activo"
+    if [ -d /run/systemd/system ]; then
+        if ! sudo systemctl is-active --quiet docker; then
+            log_warn "Docker no está activo. Iniciándolo..."
+            sudo systemctl start docker || die "No se pudo iniciar docker"
+            log_success "Docker activo"
+        fi
+    else
+        log_warn "No se detectó systemd. Omitiendo inicio del servicio (posible entorno de contenedor)."
     fi
 
+    # Para no poner sudo en cada comando de docker
     sudo usermod -aG docker ${USER}
 
     log_success "Docker instalado correctamente"

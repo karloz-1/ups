@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Agregar el repositorio de bruno
-if grep -r "bruno" /etc/apt/sources.list.d/ &>/dev/null; then
+if ! grep -r "bruno" /etc/apt/sources.list.d/ &>/dev/null; then
     sudo mkdir -p /etc/apt/keyrings
     sudo apt update && sudo apt install gpg curl
     curl -fsSL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x9FA6017ECABE0266" \
@@ -14,9 +14,10 @@ fi
 
 # Instalar bruno
 if is_installed "bruno"; then
-    log_warn "bruno ya está instalado"
+    log_warn "Bruno ya está instalado"
 else
     log_info "Instalando bruno..."
-    sudo apt update && sudo apt install bruno
-    log_success "bruno instalado"
+    sudo apt update || die "No se pudieron actualizar los repositorios de APT."
+    sudo apt install -y bruno || die "No se pudo instalar bruno"
+    log_success "Bruno instalado"
 fi
