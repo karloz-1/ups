@@ -26,8 +26,8 @@
     - [x] install.sh
     - [x] steam-install
 
-- [] 07-dots
-    - [] install.sh
+- [x] 07-dots
+    - [x] install.sh
 
 
 - [] 08-setup
