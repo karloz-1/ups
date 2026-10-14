@@ -14,13 +14,13 @@
 - [x] 04-flatpak
     - [x] install.sh
 
-- [] 05-dev
-    - [] bruno-install
-    - [] docker-install
-    - [] dotnet-install
-    - [] install.sh
-    - [] nodejs-install
-    - [] vscode-extensions-install
+- [x] 05-dev
+    - [x] bruno-install
+    - [x] docker-install
+    - [x] dotnet-install
+    - [x] install.sh
+    - [x] nodejs-install
+    - [x] vscode-extensions-install
 
 - [] 06-gaming
     - [] install.sh
