@@ -39,4 +39,4 @@
 
 - [x] utils (common.sh)
 
-- [] Main script
+- [x] Main script
