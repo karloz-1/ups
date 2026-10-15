@@ -169,4 +169,3 @@ shell_detector() {
         echo ""
     fi
 }
-shell_detector
