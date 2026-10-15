@@ -33,9 +33,9 @@
 - [x] 08-setup
     - [x] install.sh
 
-- [] 09-ai
+- [x] 09-ai
     - [x] install.sh
-    - [] opencode-install
+    - [x] opencode-install
 
 - [x] utils (common.sh)
 
