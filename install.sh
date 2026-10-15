@@ -4,6 +4,7 @@
 
 set -euo pipefail
 
+# =============== SUDO KEEP-ALIVE ===============
 sudo -v || exit 1
 PARENT_PID="$$"
 
@@ -20,6 +21,7 @@ SUDO_KEEPALIVE_PID=$!
 
 # Limpiar el proceso auxiliar al salir
 trap 'kill "$SUDO_KEEPALIVE_PID" 2>/dev/null; wait "$SUDO_KEEPALIVE_PID" 2>/dev/null' EXIT
+# ===============================================
 
 clear
 
@@ -177,6 +179,8 @@ main() {
     list_modules
     echo
     
+    shell_detector
+
     for mod in "${MODULE_ORDER[@]}"; do
         if [[ "${ENABLED[$mod]}" == "true" ]]; then
             run_module "$mod"
