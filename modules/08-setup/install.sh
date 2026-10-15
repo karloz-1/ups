@@ -9,33 +9,27 @@ module_setup() {
     # TODO: Añadir configuraciones finales aquí
     
     # Cambiar shell por defecto a zsh
+    log_info "Intentando cambiar la shell predeterminada a zsh"
     if command_exists zsh; then
-        local current_shell=$(basename "$SHELL")
-        if [[ "$current_shell" != "zsh" ]]; then
-            log_info "Cambiando shell por defecto a zsh..."
-            chsh -s "$(which zsh)"
-            log_success "Shell cambiado a zsh"
+        if [ -f "$HOME/.zshrc" ]; then
+            local current_shell=$(basename "$SHELL")
+            if [[ "$current_shell" != "zsh" ]]; then
+                log_info "Cambiando shell por defecto a zsh..."
+                chsh -s "$(which zsh)" || die "No se pudo cambiar la shell predeterminada a zsh"
+                log_success "Shell cambiada a zsh"
+            else
+                log_warn "zsh ya es la shell por defecto"
+            fi
         else
-            log_warn "Zsh ya es la shell por defecto"
+            log_warn "Para que la shell predeterminada sea zsh debes de tener el archivo [.zshrc] creado en [$HOME]"
         fi
+    else
+        log_warn "Para que la shell predeterminada sea zsh debes de tener zsh instalado"
     fi
     
-    # Crear alias en fish
-    # mkdir -p ~/.config/fish/completions
-    # cat >> ~/.config/fish/config.fish << 'EOF'
-    # # Aliases
-    # alias ls "eza --icons"
-    # alias ll "eza -la --icons"
-    # alias la "eza -a --icons"
-    # alias cat "bat"
-    # EOF
-    
-    # Configurar git
-    # TODO: Preguntar al usuario por su nombre y email
-    # git config --global user.name "Tu Nombre"
-    # git config --global user.email "tu@email.com"
-
-    sudo fc-cache -f -v
+    log_info "Actualizando caché de fuentes"
+    sudo fc-cache -f -v || die "No se pude actualizar la cache de las fuentes"
+    log_success "Caché de fuentes actualizada con exito"
     
     log_success "Configuración final completada"
 }

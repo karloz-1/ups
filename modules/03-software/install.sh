@@ -12,7 +12,7 @@ module_software() {
     source_script "03-software/vscode-install.sh"
 
     # Typst
-    source_script "03-software/typst-install.sh"
+    # source_script "03-software/typst-install.sh"
     
     log_success "Software manual instalado"
 }

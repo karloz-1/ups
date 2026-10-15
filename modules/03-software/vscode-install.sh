@@ -3,18 +3,18 @@
 if ! command_exists code; then
     tmpfile="/tmp/vscode.deb"
 
-    if ! command_exists curl; then
-        log_info "Instalando dependencia: curl"
-        sudo DEBIAN_FRONTEND=noninteractive apt install -y curl
-    fi
+    install_dependencies "curl"
 
-    log_info "Descargando paquete de Vscode desde microsoft.com"
-    curl -fsSL -o "$tmpfile" \
-        "https://go.microsoft.com/fwlink/?LinkID=760868"
+    log_info "Descargando archivo de vscode desde microsoft.com"
+    curl -fL -o "$tmpfile" \
+        "https://go.microsoft.com/fwlink/?LinkID=760868" || \
+        die "No se pudo descargar el archivo de vscode desde microsoft.com"
 
     log_info "Instalando Vscode"
-    sudo DEBIAN_FRONTEND=noninteractive apt install -y -qq "$tmpfile"
+    sudo DEBIAN_FRONTEND=noninteractive apt install -y "$tmpfile" || die "No se pudo instalar el archivo [$tmpfile]"
 
     log_info "Removiendo descarga temporal"
-    rm -f "$tmpfile"
+    rm -f "$tmpfile" || die "No se pudo eliminar el archivo [$tmpfile]"
+else
+    log_warn "Visual Studio Code ya está instalado"
 fi

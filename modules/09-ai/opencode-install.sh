@@ -1,10 +1,12 @@
 #!/bin/bash
 
 if ! command_exists opencode; then
-    if ! command_exists curl; then
-        log_info "Instalando dependencia: curl"
-        sudo DEBIAN_FRONTEND=noninteractive apt install -y curl
-    fi
+    log_info "Instalando opencode"
 
+    install_dependencies "curl"
     curl -fsSL https://opencode.ai/install | bash
+
+    log_success "Opencode correctamente instalado"
+else
+    log_warn "Opencode ya está instalado"
 fi

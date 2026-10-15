@@ -36,15 +36,7 @@ module_packages() {
         filezilla
     )
     
-    for pkg in "${packages[@]}"; do
-        if is_installed "$pkg"; then
-            log_warn "$pkg ya está instalado"
-        else
-            log_info "Instalando $pkg..."
-            sudo apt install -y "$pkg"
-            log_success "$pkg instalado"
-        fi
-    done
+    install_dependencies "${packages[@]}"
 
     # Instalar la fuente JetBrainsMono Nerd Font
     source_script "02-packages/jetbrains-mono-nerd-font-install.sh"
