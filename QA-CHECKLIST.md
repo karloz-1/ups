@@ -30,8 +30,8 @@
     - [x] install.sh
 
 
-- [] 08-setup
-    - [] install.sh
+- [x] 08-setup
+    - [x] install.sh
 
 - [] 09-ai
     - [] install.sh
