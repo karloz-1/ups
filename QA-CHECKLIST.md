@@ -38,3 +38,5 @@
     - [] opencode-install
 
 - [] utils (common.sh)
+
+- [] Main script
