@@ -103,30 +103,70 @@ install_dependencies() {
     fi
 }
 
+separator() {
+    # Usa el carácter que le pases como argumento, o '=' por defecto
+    local char="${1:-=}"
+    local cols
+    
+    # Obtiene el ancho actual de la terminal
+    cols=$(tput cols)
+    
+    # Imprime el carácter repetido hasta completar el ancho
+    printf '%*s\n' "$cols" '' | tr ' ' "$char"
+}
+
 # Detecta la shell que se está utilizando en el momento.
 # Si detecta que tienes zsh instalado, el script asumirá que usas zsh como shell de terminal.
 shell_detector() {
     log_info "SHELL Actual = $SHELL"
     if command_exists zsh && [ -f "$HOME"/.zshrc ]; then
         if ! echo "$SHELL" | grep "zsh" &>/dev/null; then
-            log_warn "El sistema asumirá que usas zsh, porque ya que tienes instalado zsh y tienes el .zshrc creado"
-            log_warn "Cambiando a zsh"
-            export SHELL="$(which zsh)"
-            log_info "SHELL Temporal = $SHELL"
-            segundos=10
+            # Mensajes de advertencia
+            log_warn "Se ha detectado que ya tienes zsh instalado y tienes el archivo $HOME/.zshrc creado, pero no es tu shell predeterminada"
+            log_warn "El script asumirá que usarás zsh, por consecuente; se reemplazará el contenido de la variable SHELL ($SHELL) por ($(which zsh))"
+            log_warn "Esto con el fin de que todos los comandos que necesiten saber que SHELL se está usando piensen que usas zsh y modifiquen el archivo .zshrc en vez del archivo .bashrc"
+            separator
+
+            echo ""
+            segundos=15
+            log_warn "${RED}SI NO ESTAS DE ACUERDO${NC} CON LO ANTERIOR Y QUIERES SEGUIR USANDO BASH; ${RED}CANCELA LA EJECUCIÓN DE SCRIPT AHORA MISMO (CTRL + C)${NC} Y ELIMINA EL PAQUETE ZSH O EL ARCHIVO .zshrc"
+            echo ""
+            log_info "Si quieres tomarte el tiempo de leer; cancela la ejecución del script (Ctrl + C)"
             for ((i=segundos; i>0; i--)); do
-                log_info "Continuando en $i segundos..."
-            sleep 1
+                echo -ne "\r${YELLOW}[WARN]${NC} Cambiando SHELL de ($SHELL) a ($(which zsh)) en $i segundos... \033[K"
+                sleep 1
             done
+            echo ""
+
+            log_warn "Cambiando a zsh..."
+            export SHELL="$(which zsh)"
+            log_success "SHELL temporal = $SHELL"
+
+            for ((i=5; i>0; i--)); do
+                echo -ne "\r${BLUE}[INFO]${NC} Continuando en $i segundos... \033[K"
+                sleep 1
+            done
+            echo ""
+        else
+            log_info "La shell por defecto ya es zsh. No hay acciones que realizar"
+            for ((i=5; i>0; i--)); do
+                echo -ne "\r${BLUE}[INFO]${NC} Continuando en $i segundos... \033[K"
+                sleep 1
+            done
+            echo ""
         fi
     else
+        log_warn "La shell por defecto es bash"
         log_warn "Si deseas que la SHELL sea zsh y los comandos ejecutados a continuación la reconozcan;"
         log_warn "debes de instalar zsh y crear el archivo .zshrc en $HOME".
         log_warn "Opcionalmente puedes hacerla tu shell por defecto pero no es necesario si ya seguiste el paso anterior."
+        separator
         segundos=10
         for ((i=segundos; i>0; i--)); do
-            log_info "Continuando en $i segundos..."
-        sleep 1
+            echo -ne "\r${BLUE}[INFO]${NC} Continuando en $i segundos... \033[K"
+            sleep 1
         done
+        echo ""
     fi
 }
+shell_detector
