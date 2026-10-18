@@ -24,6 +24,7 @@ if command_exists code; then
         icrawl.discord-vscode
         bradlc.vscode-tailwindcss
         ms-dotnettools.csdevkit
+        bmewburn.vscode-intelephense-client
     )
 
     for ext in "${vscode_extensions[@]}"; do
