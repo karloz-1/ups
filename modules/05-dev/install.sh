@@ -24,6 +24,9 @@ module_dev() {
     # .NET + C#
     source_script "05-dev/dotnet-install.sh"
 
+    # Laravel + PHP + Lampp (Xampp) + composer
+    source_script "05-dev/laravel-install.sh"
+
     # Extensiones de VS Code
     source_script "05-dev/vscode-extensions-install.sh"
     
