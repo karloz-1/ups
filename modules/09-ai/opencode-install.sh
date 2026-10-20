@@ -4,7 +4,7 @@ if ! command_exists opencode; then
     log_info "Instalando opencode"
 
     install_dependencies "curl"
-    curl -fsSL https://opencode.ai/install | bash
+    curl -fsSL https://opencode.ai/v2/install | bash
 
     log_success "Opencode correctamente instalado"
 else
