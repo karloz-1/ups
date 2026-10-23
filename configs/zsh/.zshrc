@@ -33,7 +33,7 @@ alias cat='batcat'
 alias g='git'
 alias gcm='git commit -m'
 
-alias update='sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y'
+alias update='sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y && flatpak update'
 
 alias lz='lazygit'
 
