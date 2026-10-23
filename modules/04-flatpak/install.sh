@@ -15,6 +15,7 @@ module_flatpak() {
         com.discordapp.Discord
         org.onlyoffice.desktopeditors
         it.mijorus.gearlever
+        org.chromium.Chromium
     )
     
     for app in "${flatpaks[@]}"; do
