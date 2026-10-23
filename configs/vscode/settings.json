@@ -57,4 +57,8 @@
   "window.commandCenter": false,
   "chat.titleBar.openInAgentsWindow.enabled": false,
   "workbench.secondarySideBar.defaultVisibility": "hidden",
+  "[php]": {
+    "editor.defaultFormatter": "bmewburn.vscode-intelephense-client",
+  },
+  "explorer.confirmPasteNative": false,
 }
