@@ -1,7 +1,4 @@
 local config_packages=(
-    DankMaterialShell
-    kitty
-    niri
 )
 
 for config_pkg in "${config_packages[@]}"; do

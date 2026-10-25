@@ -33,7 +33,7 @@ module_dots() {
 
     # ========= $HOME/.config files ============
     source_script "$MODULE_FOLDER_NAME/link-single-files.sh"
-    source_script "$MODULE_FOLDER_NAME/link-folders.sh"
+    # source_script "$MODULE_FOLDER_NAME/link-folders.sh"
     
     log_success "Configuraciones (dotfiles) aplicadas"
 }
