@@ -133,26 +133,48 @@
       "cursorHideTimeout": 0
     }
   },
-  "connectedFrameBarStyleBackups": {},
+  "connectedFrameBarStyleBackups": {
+    "default": {
+      "shadowIntensity": 0,
+      "squareCorners": false,
+      "attachToScreenEdge": false,
+      "gothCornersEnabled": false,
+      "borderEnabled": false
+    },
+    "dot1792549675575": {
+      "shadowIntensity": 0,
+      "squareCorners": false,
+      "attachToScreenEdge": false,
+      "gothCornersEnabled": false,
+      "borderEnabled": false
+    },
+    "bar1792875541855": {
+      "shadowIntensity": 0,
+      "squareCorners": false,
+      "attachToScreenEdge": false,
+      "gothCornersEnabled": false,
+      "borderEnabled": false
+    }
+  },
   "barConfigs": [
     {
       "id": "default",
       "name": "Main Bar",
       "enabled": true,
-      "position": 0,
+      "position": 2,
       "screenPreferences": [
         "all"
       ],
       "showOnLastDisplay": true,
       "leftWidgets": [
         {
+          "id": "launcherButton",
+          "enabled": true
+        },
+        {
           "id": "workspaceSwitcher",
           "enabled": true,
           "showOccupiedWorkspacesOnly": true
-        },
-        {
-          "id": "dankPomodoroTimer",
-          "enabled": false
         }
       ],
       "centerWidgets": [
@@ -173,7 +195,7 @@
         },
         {
           "id": "notificationButton",
-          "enabled": false
+          "enabled": true
         },
         {
           "id": "battery",
@@ -181,14 +203,14 @@
         },
         {
           "id": "controlCenterButton",
-          "enabled": false
+          "enabled": true
         }
       ],
       "spacing": 8,
       "innerPadding": 2,
       "bottomGap": 0,
       "transparency": 0.8,
-      "widgetTransparency": 0.8,
+      "widgetTransparency": 0.6,
       "squareCorners": false,
       "noBackground": false,
       "gothCornersEnabled": false,
@@ -220,7 +242,7 @@
       "widgetOutlineColor": "primary",
       "widgetOutlineThickness": 1,
       "attachToScreenEdge": false,
-      "followInterfaceStyle": false,
+      "followInterfaceStyle": true,
       "widgetFollowInterfaceStyle": false,
       "dot": false,
       "islandNotch": true,
@@ -248,7 +270,6 @@
       "islandSatelliteGap": 12,
       "widgetStyle": "pills",
       "islandInteractionMode": "click",
-      "island": true,
       "islandOuterGap": 4
     },
     {
@@ -494,8 +515,8 @@
       "trigger": "qrg"
     }
   },
-  "frameEnabled": false,
-  "frameThickness": 2,
+  "frameEnabled": true,
+  "frameThickness": 12,
   "frameRounding": 24,
   "frameShowOnOverview": true,
   "frameBlurEnabled": false,
@@ -604,7 +625,7 @@
         "showDigitalSeconds": false,
         "showAnalogNumbers": false,
         "showAnalogSeconds": true,
-        "autoPosition": true,
+        "autoPosition": false,
         "colorMode": "default",
         "customColor": "#ffffff"
       }
@@ -694,7 +715,7 @@
         "showDigitalSeconds": false,
         "showAnalogNumbers": false,
         "showAnalogSeconds": true,
-        "autoPosition": true,
+        "autoPosition": false,
         "colorMode": "default",
         "customColor": "#ffffff"
       }
@@ -763,6 +784,21 @@
         ],
         "syncPositionAcrossScreens": true
       }
+    },
+    {
+      "id": "gw_1792948935707_x6lheucz1",
+      "widgetType": "lockDate",
+      "name": "Date",
+      "enabled": true,
+      "config": {
+        "syncPositionAcrossScreens": true,
+        "displayPreferences": [
+          "all"
+        ],
+        "format": "short",
+        "colorMode": "default",
+        "customColor": "#ffffff"
+      }
     }
   ],
   "lockScreenShowPowerActions": false,
@@ -822,11 +858,17 @@
   "batteryProfileName": "1",
   "acProfileName": "2",
   "wellbeingAppLimits": {},
-  "niriLayoutGapsOverride": -1,
+  "niriLayoutGapsOverride": 12,
   "niriLayoutBorderSize": -1,
   "blurForegroundLayers": true,
   "radiusMode": "scale",
   "niriLayoutRadiusOverride": -1,
   "blurLayerOutlineOpacity": 0,
-  "blurStrength": 16
+  "blurStrength": 16,
+  "osdPositionOverrides": {
+    "volume": 7,
+    "brightness": 7
+  },
+  "osdAlwaysShowValue": false,
+  "frameCloseGaps": true
 }
