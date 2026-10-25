@@ -1,0 +1,58 @@
+{
+  "dankKDEConnect": {
+    "enabled": true,
+    "selectedDeviceId": "9081fe99e3714979acac9f543404136b"
+  },
+  "dankPomodoroTimer": {
+    "enabled": true,
+    "autoSetDND": true
+  },
+  "quickCapture": {
+    "enabled": true,
+    "screenshotBackend": "dms",
+    "backgroundAutoApply": true,
+    "backgroundDefaultSolidColorMode": "adaptive",
+    "backgroundDefaultMode": "image",
+    "backgroundImageFolder": "/home/k4rl0z/Pictures/Wallpapers",
+    "backgroundDefaultImagePath": "/home/k4rl0z/Pictures/Wallpapers/mountains.png",
+    "backgroundImageBlur": false,
+    "backgroundImageDim": false,
+    "backgroundDefaultShadow": 25,
+    "postNotification": "notification",
+    "backgroundDefaultRadius": 20,
+    "backgroundDefaultAngle": 45,
+    "backgroundDefaultPadding": 40,
+    "color_palette_preset": "custom",
+    "toolbar_color_primary": "#81D3DD",
+    "toolbar_color_0": "#FFB4AB",
+    "toolbar_color_1": "#FF9800",
+    "toolbar_color_2": "#2196F3",
+    "toolbar_color_3": "#B1CBCF",
+    "toolbar_color_4": "#252B2C",
+    "toolbar_color_5": "#DEE4E4",
+    "toolbar_color_6": "#0E1415",
+    "doneAction": "both",
+    "saveFilenamePattern": "Screenshot-%Y-%m-%d_%H-%M-%S",
+    "regionHudScale": "auto",
+    "menuRightClickAction": "copy",
+    "rightClickAction": "clipboard",
+    "middleClickAction": "region",
+    "micDevice": "default_input",
+    "systemAudioDevice": "default_output",
+    "recordingBackend": "auto",
+    "recordingCodec": "auto",
+    "recordingQuality": "medium",
+    "recordingScreenTarget": "screen",
+    "backgroundDefaultAlignment": "center",
+    "backgroundDefaultAspectRatio": "auto"
+  },
+  "dmsThemeSync": {
+    "enabled": true,
+    "applyMatugenColors": true,
+    "qtPlatformTheme": "preserve",
+    "qtSyncMode": "manual",
+    "folderColorBaseThemeDark": "",
+    "folderColorBaseThemeLight": "",
+    "folderColorBaseTheme": ""
+  }
+}
