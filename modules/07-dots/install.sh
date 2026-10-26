@@ -24,7 +24,7 @@ module_dots() {
     mkdir -p "$HOME_CONFIG" || die "No se pudo crear la carpeta $HOME_CONFIG"
 
     # ========== Instalar plugins ==========
-    source_script "$MODULE_FOLDER_NAME/duxshell-plugins-install.sh"
+    # source_script "$MODULE_FOLDER_NAME/duxshell-plugins-install.sh"
 
 
     # ========================== Proceso de backup y enlace ================================
