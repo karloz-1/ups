@@ -3,10 +3,6 @@
     "enabled": true,
     "selectedDeviceId": "9081fe99e3714979acac9f543404136b"
   },
-  "dankPomodoroTimer": {
-    "enabled": true,
-    "autoSetDND": true
-  },
   "quickCapture": {
     "enabled": true,
     "screenshotBackend": "dms",
@@ -45,14 +41,5 @@
     "recordingScreenTarget": "screen",
     "backgroundDefaultAlignment": "center",
     "backgroundDefaultAspectRatio": "auto"
-  },
-  "dmsThemeSync": {
-    "enabled": true,
-    "applyMatugenColors": true,
-    "qtPlatformTheme": "preserve",
-    "qtSyncMode": "manual",
-    "folderColorBaseThemeDark": "",
-    "folderColorBaseThemeLight": "",
-    "folderColorBaseTheme": ""
   }
 }
